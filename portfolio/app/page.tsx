@@ -24,11 +24,8 @@ export default function Home() {
       </p>
 
       <p>
-        Outside of work I&apos;m VP of{" "}
-        <a href={links.bhangra} target="_blank" rel="noopener noreferrer">
-          WashU Bhangra
-        </a>
-        , follow NBA analytics pretty closely, and trade on prediction markets.
+        Outside of work I&apos;m VP of WashU Bhangra, follow NBA analytics
+        pretty closely, and trade on prediction markets.
         I&apos;m also building <Link href="/work/nephly">Nephly</Link> with my
         brother — a navigation tool for people exploring kidney donation.
       </p>

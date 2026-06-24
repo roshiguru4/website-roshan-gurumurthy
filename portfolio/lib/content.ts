@@ -14,7 +14,6 @@ export const links = {
   researcher: "/work",
   washu: "https://wustl.edu",
   schaeffler: "https://www.schaeffler.com",
-  bhangra: "https://www.instagram.com/washubhangra/",
 };
 
 export type Project = {
