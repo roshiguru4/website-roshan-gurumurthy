@@ -8,7 +8,6 @@ import { profile } from "@/lib/content";
 const LINKS = [
   { href: "/projects", label: "Projects", external: false },
   { href: profile.github, label: "GitHub", external: true },
-  { href: profile.resume, label: "Resume", external: true },
 ];
 
 /**

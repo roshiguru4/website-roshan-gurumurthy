@@ -8,8 +8,6 @@ export const profile = {
   email: "g.roshan@wustl.edu",
   linkedin: "https://linkedin.com/in/roshan-gurumurthy",
   github: "https://github.com/roshiguru4",
-  // Drop a resume.pdf into public/ to make this link work.
-  resume: "/resume.pdf",
 };
 
 // ─── HERO TYPEWRITER ─────────────────────────────────────────────────────
