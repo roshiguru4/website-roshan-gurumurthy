@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const geist = Geist({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
@@ -17,7 +17,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Roshan Gurumurthy",
   description:
-    "CS + Math junior at WashU. Building AI retrieval systems, ML pipelines, and tools people use.",
+    "CS + Math at WashU. Building RAG search and ML systems — and the tools around them.",
 };
 
 export default function RootLayout({
@@ -26,8 +26,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
-      <body>{children}</body>
+    <html
+      lang="en"
+      className={`${geist.variable} ${geistMono.variable}`}
+    >
+      <body className="font-sans">{children}</body>
     </html>
   );
 }

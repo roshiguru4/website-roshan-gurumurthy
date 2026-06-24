@@ -1,71 +1,70 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { profile } from "@/lib/content";
 
+const LINKS = [
+  { href: "/projects", label: "Projects", external: false },
+  { href: profile.github, label: "GitHub", external: true },
+  { href: profile.resume, label: "Resume", external: true },
+];
+
 /**
- * Fixed top nav for the dark site. Transparent over the hero, then fades in a
- * blurred surface background once you scroll. A thin accent bar at the bottom
- * tracks scroll progress through the page.
+ * Fixed top nav. Transparent on load; a blurred base-color background fades in
+ * only once you scroll past 40px (prevents the frosted glass flashing on load).
  */
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 50);
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(max > 0 ? Math.min(window.scrollY / max, 1) : 0);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <nav
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-300 ${
         scrolled
-          ? "border-b border-line bg-bg/70 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent"
+          ? "border-line bg-base/85 backdrop-blur-md"
+          : "border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
+      <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
         <Link
           href="/"
-          className="font-mono text-sm font-medium tracking-tight text-fg transition-colors hover:text-accent"
+          className="font-mono text-xs text-muted transition-colors hover:text-primary"
         >
-          roshan_g
+          rg
         </Link>
-        <div className="flex items-center gap-x-6 font-mono text-sm text-muted">
-          <Link href="/" className="transition-colors hover:text-accent">
-            Home
-          </Link>
-          <Link href="/projects" className="transition-colors hover:text-accent">
-            Projects
-          </Link>
-          <a
-            href={profile.github}
-            className="transition-colors hover:text-accent"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub
-          </a>
+        <div className="flex items-center gap-x-6 font-mono text-xs">
+          {LINKS.map((link) => {
+            const active = !link.external && pathname.startsWith(link.href);
+            const className = `transition-colors hover:text-primary ${
+              active ? "text-primary" : "text-muted"
+            }`;
+            return link.external ? (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={className}
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link key={link.label} href={link.href} className={className}>
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
       </div>
-      {/* Scroll progress */}
-      <div
-        className="h-px origin-left bg-accent transition-transform duration-150 ease-out"
-        style={{ transform: `scaleX(${progress})` }}
-        aria-hidden
-      />
     </nav>
   );
 }
@@ -73,11 +72,28 @@ export function Nav() {
 export function Footer() {
   return (
     <footer className="border-t border-line">
-      <div className="mx-auto max-w-5xl px-6 py-8 font-mono text-xs text-muted">
-        <p>Built with Next.js · Deployed on Vercel</p>
-        <p className="mt-1">
-          {profile.name} · {profile.location}
-        </p>
+      <div className="mx-auto flex max-w-3xl flex-col gap-4 px-6 py-10 font-mono text-xs text-muted sm:flex-row sm:justify-between">
+        <div className="space-y-1">
+          <p>
+            <a
+              href={`mailto:${profile.email}`}
+              className="transition-colors hover:text-primary"
+            >
+              {profile.email}
+            </a>
+          </p>
+          <p>
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-primary"
+            >
+              github.com/roshiguru4
+            </a>
+          </p>
+        </div>
+        <p>Built with Next.js</p>
       </div>
     </footer>
   );

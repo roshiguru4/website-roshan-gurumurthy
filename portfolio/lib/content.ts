@@ -4,13 +4,24 @@
 export const profile = {
   name: "Roshan Gurumurthy",
   firstName: "Roshan",
-  // Short tagline shown under the name in the hero.
-  tagline: "CS + Math junior at WashU, building RAG search and ML systems that find the right answer, not just a close one.",
   location: "St. Louis, MO",
   email: "g.roshan@wustl.edu",
   linkedin: "https://linkedin.com/in/roshan-gurumurthy",
   github: "https://github.com/roshiguru4",
+  // Drop a resume.pdf into public/ to make this link work.
+  resume: "/resume.pdf",
 };
+
+// ─── HERO TYPEWRITER ─────────────────────────────────────────────────────
+// The home page cycles through these lines, one at a time. Keep them
+// specific and real — exact systems and numbers, not "I build AI things".
+// Format that reads well: <thing> → <what it does, concretely>.
+export const typewriter: string[] = [
+  "Genie Search → RAG over 4,000+ engineering PDFs on AKS",
+  "embcache → sub-millisecond embedding retrieval, with receipts",
+  "Nephly → triage for kidney donors across 400+ reviewed answers",
+  "S&P 500 classifier → buy / hold / sell at 87.7% accuracy",
+];
 
 // 3 conversational paragraphs for the About section. Plain English, no resume bullets.
 export const about: string[] = [
@@ -67,57 +78,97 @@ export const education: Education[] = [
 ];
 
 export type Project = {
+  /** URL slug for /projects/[slug]. Keep lowercase, hyphenated. */
+  slug: string;
   name: string;
+  /** One-line description shown in the list. */
+  description: string;
+  /** Year shown on the right of the list row. */
+  year: string;
   status?: string;
+  /** Source repo. */
   link: string;
   linkLabel: string;
   /** Optional deployed/demo URL. Renders a "Live demo →" link when set. */
   liveLink?: string;
-  tagline: string;
-  description: string;
   tech: string[];
+  /** Detail page story — keep each to a short paragraph. */
+  detail: {
+    problem: string;
+    approach: string;
+    outcome: string;
+  };
 };
 
 export const projects: Project[] = [
   {
+    slug: "embcache",
     name: "embcache",
+    description: "A caching layer for text embeddings that proves its own savings.",
+    year: "2025",
     status: "In progress",
     link: "https://github.com/roshiguru4/embcache",
     linkLabel: "GitHub",
-    tagline:
-      "A drop-in caching layer for text embeddings that proves its own savings.",
-    description:
-      "Wrap any embedding function and identical text comes back instantly, for free, instead of hitting the API again. It uses model-aware keys so different models never collide, packs vectors as float32 to keep storage tight, and tracks exactly how many calls, tokens, and dollars it's saved you.",
     tech: ["Python", "SQLite", "Redis"],
+    detail: {
+      problem:
+        "Embedding the same text twice is pure waste — you pay the API again for a vector you already computed. In any RAG pipeline that re-indexes or re-runs, that adds up fast in both latency and dollars.",
+      approach:
+        "embcache wraps any embedding function. Identical text returns a cached vector instantly instead of hitting the API. Keys are model-aware so different models never collide, vectors are packed as float32 to keep storage tight, and every hit is logged.",
+      outcome:
+        "It doesn't just save calls — it proves it, tracking exactly how many calls, tokens, and dollars it has saved you. Sub-millisecond retrieval on repeat lookups, with a receipt.",
+    },
   },
   {
+    slug: "nephly",
     name: "Nephly",
+    description: "AI navigation that helps potential kidney donors find their next step.",
+    year: "2024",
     link: "https://github.com/roshiguru4",
     linkLabel: "GitHub",
-    tagline:
-      "An AI navigation tool that helps potential kidney donors figure out their next step.",
-    description:
-      "Built with my brother for the KidneyX EMPOWER Challenge. I wrote the RAG pipeline and the Excel-parsing logic behind it, structuring 400+ physician-reviewed Q&A entries across 15 categories into a knowledge base. The whole thing runs as a five-stage flow, from intake and eligibility screening to retrieval and a warm handoff, triaging each person toward an eligibility pathway or a referral to a nephrologist. It went in front of judges as part of our competition submission.",
     tech: ["React", "Node.js", "Azure OpenAI", "LangChain", "Vercel"],
+    detail: {
+      problem:
+        "Becoming a kidney donor means navigating a maze of eligibility rules and medical questions, and most people don't know where to even start. Built with my brother for the KidneyX EMPOWER Challenge.",
+      approach:
+        "I wrote the RAG pipeline and the Excel-parsing logic that structures 400+ physician-reviewed Q&A entries across 15 categories into a knowledge base, behind a five-stage flow from intake and eligibility screening to retrieval and a warm handoff.",
+      outcome:
+        "Each person gets triaged toward an eligibility pathway or a referral to a nephrologist. It went in front of judges as part of our competition submission.",
+    },
   },
   {
+    slug: "dance-practice-tool",
     name: "Dance Practice Tool",
+    description: "A web app for looping and annotating dance audio that my team uses.",
+    year: "2024",
     link: "https://github.com/roshiguru4",
     linkLabel: "GitHub",
-    tagline:
-      "A web app for looping and annotating dance audio that my team actually uses.",
-    description:
-      "A full-stack CRUD app that lets dancers upload tracks, set loop points for tricky sections, and leave timestamped notes per song, so a team stops passing audio files around in group chats. I added JWT auth for secure multi-user access and designed the relational audio-metadata schema in SQLAlchemy.",
     tech: ["Flask", "SQLAlchemy", "Bootstrap", "JWT"],
+    detail: {
+      problem:
+        "My dance team kept passing audio files around in group chats, with loop points and notes living nowhere. Drilling a tricky 8-count meant scrubbing the same clip by hand every practice.",
+      approach:
+        "A full-stack CRUD app where dancers upload tracks, set loop points for hard sections, and leave timestamped notes per song. I added JWT auth for secure multi-user access and designed the relational audio-metadata schema in SQLAlchemy.",
+      outcome:
+        "It replaced the group-chat shuffle — the team actually uses it to run practice.",
+    },
   },
   {
+    slug: "ml-projects",
     name: "ML Projects",
+    description: "One repo, three models I built to scratch different itches.",
+    year: "2023",
     link: "https://github.com/roshiguru4",
     linkLabel: "GitHub",
-    tagline: "One repo, three models I built to scratch different itches.",
-    description:
-      "The one I keep coming back to is a buy/hold/sell risk classifier for the S&P 500: a random forest trained on 9 engineered features (Sharpe ratio, beta, 30-day volatility) across 500+ equities, hitting 87.7% accuracy and benchmarked against a TensorFlow/Keras net to see how ensembles stack up against deep models. The other two predict NBA career longevity from rookie stats (77.2%) and classify obesity risk with a random forest (95.5%). Each one started as a dataset I couldn't stop poking at.",
     tech: ["Scikit-learn", "TensorFlow", "Pandas", "BeautifulSoup", "yfinance"],
+    detail: {
+      problem:
+        "Three datasets I couldn't stop poking at: S&P 500 risk, NBA careers, and obesity risk. Each one was a question I wanted a model to answer.",
+      approach:
+        "The one I keep coming back to is a buy/hold/sell risk classifier for the S&P 500 — a random forest trained on 9 engineered features (Sharpe ratio, beta, 30-day volatility) across 500+ equities, benchmarked against a TensorFlow/Keras net to see how ensembles stack up against deep models.",
+      outcome:
+        "87.7% accuracy on the S&P 500 classifier, plus models predicting NBA career longevity from rookie stats (77.2%) and classifying obesity risk (95.5%).",
+    },
   },
 ];
 
@@ -143,27 +194,4 @@ export const skills: SkillGroup[] = [
     group: "Tools & Platforms",
     items: ["Azure", "Docker", "Git", "Jira", "Jupyter", "Power BI", "Excel VBA"],
   },
-];
-
-// ─── PHOTOS ──────────────────────────────────────────────────────────────
-// HOW TO ADD A PHOTO (3 steps, no code knowledge needed):
-//   1. Drop your image file into the  public/photos/  folder.
-//   2. Add one line to the `gallery` list below, e.g.
-//          { src: "/photos/cardinals-game.jpg" },
-//      The path is always "/photos/" + your file name.
-//   3. (Optional) add a caption that shows on hover:
-//          { src: "/photos/cardinals-game.jpg", caption: "Cardinals game" },
-//
-// Add as many as you like — the grid arranges them automatically.
-// To remove a photo, just delete its line. To reorder, drag lines up/down.
-
-// The big circular headshot at the top of the home page.
-export const headshot = "/photos/headshot.jpg";
-
-export type Photo = { src: string; caption?: string };
-
-export const gallery: Photo[] = [
-  { src: "/photos/photo-1.jpg", caption: "Bhangra" },
-  { src: "/photos/photo-2.jpg", caption: "Cardinals game" },
-  { src: "/photos/photo-3.jpg", caption: "Jet skiing" },
 ];
