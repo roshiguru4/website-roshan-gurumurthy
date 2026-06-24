@@ -1,49 +1,25 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Nav, Footer } from "@/components/Nav";
+import { Reveal } from "@/components/Reveal";
+import { ParallaxImage } from "@/components/Parallax";
+import { Counter } from "@/components/Counter";
+import {
+  profile,
+  about,
+  experience,
+  education,
+  skills,
+  stats,
+  photos,
+} from "@/lib/content";
 
-function Section({
-  label,
-  title,
-  children,
-}: {
-  label: string;
-  title: string;
-  children: React.ReactNode;
-}) {
+function SectionHeader({ label, title }: { label: string; title: string }) {
   return (
-    <section className="mb-20">
-      <div className="mb-10 flex items-baseline gap-4 border-b border-line pb-3">
-        <span className="font-mono text-xs text-accent">{label}</span>
-        <h2 className="text-sm font-medium uppercase tracking-[0.15em]">
-          {title}
-        </h2>
-      </div>
-      <div className="space-y-12">{children}</div>
-    </section>
-  );
-}
-
-function ExperienceItem({
-  org,
-  role,
-  dates,
-  blurb,
-}: {
-  org: string;
-  role: string;
-  dates: string;
-  blurb: string;
-}) {
-  return (
-    <div>
-      <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
-        <h3 className="text-lg font-medium">{org}</h3>
-        <span className="font-mono text-xs text-muted">{dates}</span>
-      </div>
-      <p className="mt-0.5 text-sm text-muted">{role}</p>
-      <p className="mt-3 text-[15px] leading-relaxed text-ink/85">{blurb}</p>
-    </div>
+    <Reveal className="mb-12 flex items-baseline gap-4 border-b border-line pb-3">
+      <span className="font-mono text-xs text-accent">{label}</span>
+      <h2 className="text-sm font-medium uppercase tracking-[0.18em]">{title}</h2>
+    </Reveal>
   );
 }
 
@@ -51,135 +27,199 @@ export default function Home() {
   return (
     <>
       <Nav />
-      <main className="mx-auto max-w-3xl px-6 py-16 sm:py-20">
-        {/* Intro */}
-        <header className="fade-up mb-16 flex flex-col gap-6 sm:flex-row sm:items-center">
-          <Image
-            src="/photos/headshot.jpg"
-            alt="Roshan Gurumurthy"
-            width={128}
-            height={128}
-            className="h-32 w-32 shrink-0 rounded-full border border-line object-cover"
-            priority
-          />
-          <h1 className="text-3xl font-medium tracking-tight sm:text-4xl">
-            I&apos;m Roshan.
-          </h1>
-        </header>
 
-        {/* About */}
-        <div className="mb-16 max-w-2xl space-y-4 text-[15px] leading-relaxed text-ink/85">
-          <p>
-            I&apos;m a junior at Washington University in St. Louis studying
-            Computer Science and Math. Most of what I think about lately is how
-            to make machines actually find the right information — right now
-            that means working on production RAG systems at Schaeffler, where I
-            help engineers dig answers out of thousands of dense technical
-            documents.
-          </p>
-          <p>
-            Outside of that I build things because they bug me until they exist.
-            I made{" "}
-            <Link
-              href="/projects"
-              className="text-accent underline-offset-4 hover:underline"
-            >
-              embcache
-            </Link>{" "}
-            because re-embedding the same text over and over felt wasteful, and
-            I built Nephly with my brother for a kidney-care challenge. I also
-            train a fair number of ML models for fun — sports, finance, whatever
-            dataset I can&apos;t stop thinking about.
-          </p>
-          <p>
-            When I&apos;m not at a keyboard I&apos;m probably playing basketball,
-            running our Bhangra team as VP, or way too deep in an NBA game and
-            the prediction markets around it.
-          </p>
+      {/* Hero — full viewport, big type */}
+      <header className="relative flex h-screen flex-col items-center justify-center overflow-hidden px-6 text-center">
+        <div className="hero-glow" aria-hidden />
+        <p className="hero-rise mb-6 font-mono text-xs uppercase tracking-[0.3em] text-muted" style={{ animationDelay: "0ms" }}>
+          {profile.location}
+        </p>
+        <h1
+          className="hero-name max-w-4xl text-5xl font-semibold leading-[1.05] tracking-tight sm:text-7xl md:text-8xl"
+          style={{ animationDelay: "120ms" }}
+        >
+          {profile.name}
+        </h1>
+        <p
+          className="hero-rise mt-8 max-w-xl text-base leading-relaxed text-muted sm:text-lg"
+          style={{ animationDelay: "320ms" }}
+        >
+          {profile.tagline}
+        </p>
+        <div
+          className="scroll-cue absolute bottom-10 font-mono text-xs text-muted"
+          aria-hidden
+        >
+          ↓ scroll
+        </div>
+      </header>
+
+      {/* Full-bleed parallax headshot */}
+      <ParallaxImage
+        src={photos.headshot}
+        alt={profile.name}
+        speed={0.18}
+        priority
+        className="h-[70vh] w-full"
+      />
+
+      {/* About */}
+      <section className="mx-auto max-w-3xl px-6 py-28">
+        <Reveal className="mb-12">
+          <h2 className="text-3xl font-medium tracking-tight sm:text-4xl">
+            I&apos;m {profile.firstName}.
+          </h2>
+        </Reveal>
+        <div className="space-y-6 text-lg leading-relaxed text-ink/85">
+          {about.map((para, i) => (
+            <Reveal as="p" key={i} delay={i * 120}>
+              {para}
+            </Reveal>
+          ))}
         </div>
 
         {/* Contact */}
-        <div className="mb-20 flex flex-wrap gap-x-6 gap-y-2 font-mono text-sm">
+        <Reveal className="mt-12 flex flex-wrap gap-x-6 gap-y-2 font-mono text-sm">
           <a
-            href="mailto:g.roshan@wustl.edu"
-            className="underline-offset-4 hover:text-accent hover:underline"
+            href={`mailto:${profile.email}`}
+            className="link-underline transition-colors hover:text-accent"
           >
-            g.roshan@wustl.edu
+            {profile.email}
           </a>
           <a
-            href="https://linkedin.com/in/roshan-gurumurthy"
-            className="underline-offset-4 hover:text-accent hover:underline"
+            href={profile.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-underline transition-colors hover:text-accent"
           >
             LinkedIn
           </a>
           <Link
             href="/projects"
-            className="text-accent underline-offset-4 hover:underline"
+            className="link-underline text-accent"
           >
             See what I&apos;ve built →
           </Link>
-        </div>
+        </Reveal>
+      </section>
 
-        {/* Photo strip */}
-        <div className="mb-20 grid grid-cols-3 gap-3">
-          {["photo-1", "photo-2", "photo-3"].map((p) => (
-            <div
-              key={p}
-              className="relative aspect-[4/5] overflow-hidden border border-line bg-line/40"
-            >
-              <Image
-                src={`/photos/${p}.jpg`}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 33vw, 230px"
-              />
-            </div>
+      {/* Stats band — animated, résumé-true numbers */}
+      <section className="grain relative overflow-hidden bg-ink py-24 text-paper">
+        <div className="mx-auto max-w-5xl px-6">
+          <Reveal className="mb-14">
+            <p className="font-mono text-xs uppercase tracking-[0.3em] text-paper/50">
+              By the numbers
+            </p>
+          </Reveal>
+          <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-4">
+            {stats.map((stat, i) => (
+              <Reveal key={stat.label} delay={i * 100}>
+                <p className="text-4xl font-semibold tracking-tight sm:text-5xl">
+                  <Counter
+                    value={stat.value}
+                    suffix={stat.suffix}
+                    decimals={stat.decimals}
+                  />
+                </p>
+                <p className="mt-3 text-sm leading-snug text-paper/60">
+                  {stat.label}
+                </p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Experience */}
+      <section className="mx-auto max-w-3xl px-6 py-28">
+        <SectionHeader label="01" title="Where I've worked" />
+        <div className="space-y-14">
+          {experience.map((item, i) => (
+            <Reveal key={item.org} delay={i * 100}>
+              <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
+                <h3 className="text-xl font-medium">{item.org}</h3>
+                <span className="font-mono text-xs text-muted">{item.dates}</span>
+              </div>
+              <p className="mt-0.5 text-sm text-muted">{item.role}</p>
+              <p className="mt-3 text-[15px] leading-relaxed text-ink/85">
+                {item.blurb}
+              </p>
+            </Reveal>
           ))}
         </div>
+      </section>
 
-        {/* Experience */}
-        <Section label="01" title="Where I've worked">
-          <ExperienceItem
-            org="Schaeffler Group"
-            role="IT & Digital Intern"
-            dates="May 2026 — Aug. 2026"
-            blurb="I work on the search system that helps engineers find answers buried in thousands of technical documents — improving how those documents get parsed and broken up so the right passage actually surfaces when someone asks a question."
-          />
-          <ExperienceItem
-            org="WashU CSE — Chien-Ju Ho Lab"
-            role="Undergraduate Research Assistant"
-            dates="Aug. 2025 — Present"
-            blurb="I help run behavioral experiments studying how people defer to AI, and I wrangle the messy session data into something we can actually analyze across a few hundred participants."
-          />
-          <ExperienceItem
-            org="WashU CSE"
-            role="Teaching Assistant — Intro CS (Java)"
-            dates="Aug. 2025 — Present"
-            blurb="I sit with first-year students every week, read through their code, and help them untangle the bugs and mental models that trip everyone up early on."
-          />
-        </Section>
+      {/* Education */}
+      <section className="mx-auto max-w-3xl px-6 py-28">
+        <SectionHeader label="02" title="Education" />
+        <div className="space-y-14">
+          {education.map((edu) => (
+            <Reveal key={edu.school}>
+              <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
+                <h3 className="text-xl font-medium">{edu.school}</h3>
+                <span className="font-mono text-xs text-muted">{edu.dates}</span>
+              </div>
+              <p className="mt-0.5 text-sm text-muted">{edu.degree}</p>
+              <p className="mt-3 text-[15px] leading-relaxed text-ink/85">
+                {edu.detail}
+              </p>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
-        {/* Education */}
-        <Section label="02" title="Education">
-          <div>
-            <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
-              <h3 className="text-lg font-medium">
-                Washington University in St. Louis
-              </h3>
-              <span className="font-mono text-xs text-muted">
-                Expected May 2027
-              </span>
-            </div>
-            <p className="mt-0.5 text-sm text-muted">
-              B.S. Computer Science + Mathematics, Minor in Finance
+      {/* Stack */}
+      <section className="mx-auto max-w-3xl px-6 py-28">
+        <SectionHeader label="03" title="Stack" />
+        <div className="space-y-8">
+          {skills.map((group, i) => (
+            <Reveal key={group.group} delay={i * 100}>
+              <div className="flex flex-col gap-2 sm:flex-row sm:gap-6">
+                <p className="shrink-0 pt-0.5 font-mono text-xs uppercase tracking-wider text-muted sm:w-48">
+                  {group.group}
+                </p>
+                <div className="flex flex-wrap gap-x-3 gap-y-2">
+                  {group.items.map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-line px-3 py-1 font-mono text-xs text-ink/80"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Dark photo strip — personal closer */}
+      <section className="bg-ink py-28 text-paper">
+        <div className="mx-auto max-w-5xl px-6">
+          <Reveal className="mb-12">
+            <p className="font-mono text-xs uppercase tracking-[0.3em] text-paper/50">
+              Off the clock
             </p>
-            <p className="mt-3 text-[15px] leading-relaxed text-ink/85">
-              GPA 3.75 · Dean&apos;s List
-            </p>
+          </Reveal>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {photos.strip.map((src, i) => (
+              <Reveal key={src} delay={i * 140}>
+                <div className="group relative aspect-[4/5] overflow-hidden bg-paper/10">
+                  <Image
+                    src={src}
+                    alt=""
+                    fill
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                  />
+                </div>
+              </Reveal>
+            ))}
           </div>
-        </Section>
-      </main>
+        </div>
+      </section>
+
       <Footer />
     </>
   );
