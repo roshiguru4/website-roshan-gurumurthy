@@ -145,18 +145,25 @@ export const skills: SkillGroup[] = [
   },
 ];
 
-// Headline numbers for the animated stats band. Keep these résumé-true.
-export type Stat = { value: number; suffix?: string; label: string; decimals?: number };
+// ─── PHOTOS ──────────────────────────────────────────────────────────────
+// HOW TO ADD A PHOTO (3 steps, no code knowledge needed):
+//   1. Drop your image file into the  public/photos/  folder.
+//   2. Add one line to the `gallery` list below, e.g.
+//          { src: "/photos/cardinals-game.jpg" },
+//      The path is always "/photos/" + your file name.
+//   3. (Optional) add a caption that shows on hover:
+//          { src: "/photos/cardinals-game.jpg", caption: "Cardinals game" },
+//
+// Add as many as you like — the grid arranges them automatically.
+// To remove a photo, just delete its line. To reorder, drag lines up/down.
 
-export const stats: Stat[] = [
-  { value: 4000, suffix: "+", label: "engineering docs indexed at Schaeffler" },
-  { value: 93.1, suffix: "%", label: "document parse success rate", decimals: 1 },
-  { value: 150, suffix: "+", label: "participants in the Ho Lab study" },
-  { value: 87.7, suffix: "%", label: "accuracy on the S&P 500 classifier", decimals: 1 },
+// The big circular headshot at the top of the home page.
+export const headshot = "/photos/headshot.jpg";
+
+export type Photo = { src: string; caption?: string };
+
+export const gallery: Photo[] = [
+  { src: "/photos/photo-1.jpg", caption: "Bhangra" },
+  { src: "/photos/photo-2.jpg", caption: "Cardinals game" },
+  { src: "/photos/photo-3.jpg", caption: "Jet skiing" },
 ];
-
-// Photos used in the full-bleed and strip sections. Replace the files in public/photos/.
-export const photos = {
-  headshot: "/photos/headshot.jpg",
-  strip: ["/photos/photo-1.jpg", "/photos/photo-2.jpg", "/photos/photo-3.jpg"],
-};

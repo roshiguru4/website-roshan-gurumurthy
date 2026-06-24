@@ -43,7 +43,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
             </a>
           </div>
         </div>
-        <p className="mt-3 text-lg font-medium text-ink/90">{project.tagline}</p>
+        <p className="mt-3 text-lg font-medium text-fg/90">{project.tagline}</p>
         <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-muted">
           {project.description}
         </p>
@@ -62,12 +62,16 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
 export default function Projects() {
   return (
     <>
-      <Nav heroTheme="dark" />
+      <Nav />
 
-      {/* Dark full-viewport hero */}
-      <header className="flex min-h-[80vh] flex-col justify-center bg-ink px-6 text-paper">
+      {/* Full-viewport hero */}
+      <header className="relative flex min-h-[80vh] flex-col justify-center overflow-hidden px-6">
+        <div className="hero-glow" aria-hidden />
         <div className="mx-auto w-full max-w-5xl">
-          <p className="hero-rise mb-6 font-mono text-xs uppercase tracking-[0.3em] text-paper/50" style={{ animationDelay: "0ms" }}>
+          <p
+            className="hero-rise mb-6 font-mono text-xs uppercase tracking-[0.3em] text-muted"
+            style={{ animationDelay: "0ms" }}
+          >
             Selected work
           </p>
           <h1
@@ -77,7 +81,7 @@ export default function Projects() {
             Things I&apos;ve built
           </h1>
           <p
-            className="hero-rise mt-6 max-w-2xl text-lg leading-relaxed text-paper/70"
+            className="hero-rise mt-6 max-w-2xl text-lg leading-relaxed text-muted"
             style={{ animationDelay: "320ms" }}
           >
             A mix of tools I needed, problems I couldn&apos;t stop thinking about,

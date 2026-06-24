@@ -4,11 +4,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#1a1a18",
-        paper: "#faf8f4",
-        muted: "#6b6862",
-        line: "#e3ded4",
-        accent: "#b8451f",
+        // Dark-first palette. `bg` is the page; `surface` is raised panels.
+        bg: "#09090b",
+        surface: "#141418",
+        line: "#27272d",
+        fg: "#ededec",
+        muted: "#9b9ba3",
+        accent: "#f2581d",
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],

@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import { profile } from "@/lib/content";
 
 /**
- * @param heroTheme Color of the hero this nav floats over before scroll.
- *   "dark" hero → light nav text; "light" hero → dark nav text.
- *   Once scrolled past 50px the nav gets a paper background and always uses dark text.
+ * Fixed top nav for the dark site. Transparent over the hero, then fades in a
+ * blurred surface background once you scroll. A thin accent bar at the bottom
+ * tracks scroll progress through the page.
  */
-export function Nav({ heroTheme = "light" }: { heroTheme?: "light" | "dark" }) {
+export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -28,27 +28,22 @@ export function Nav({ heroTheme = "light" }: { heroTheme?: "light" | "dark" }) {
     };
   }, []);
 
-  // Over a dark hero (not yet scrolled) we need light text; otherwise dark.
-  const onDark = heroTheme === "dark" && !scrolled;
-  const logoColor = onDark ? "text-paper" : "text-ink";
-  const linkColor = onDark ? "text-paper/70" : "text-muted";
-
   return (
     <nav
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${
         scrolled
-          ? "border-b border-line bg-paper/80 backdrop-blur-md"
+          ? "border-b border-line bg-bg/70 backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
         <Link
           href="/"
-          className={`font-mono text-sm font-medium tracking-tight transition-colors hover:text-accent ${logoColor}`}
+          className="font-mono text-sm font-medium tracking-tight text-fg transition-colors hover:text-accent"
         >
           roshan_g
         </Link>
-        <div className={`flex items-center gap-x-6 font-mono text-sm transition-colors ${linkColor}`}>
+        <div className="flex items-center gap-x-6 font-mono text-sm text-muted">
           <Link href="/" className="transition-colors hover:text-accent">
             Home
           </Link>

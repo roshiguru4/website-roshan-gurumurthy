@@ -3,15 +3,14 @@ import Link from "next/link";
 import { Nav, Footer } from "@/components/Nav";
 import { Reveal } from "@/components/Reveal";
 import { ParallaxImage } from "@/components/Parallax";
-import { Counter } from "@/components/Counter";
 import {
   profile,
   about,
   experience,
   education,
   skills,
-  stats,
-  photos,
+  headshot,
+  gallery,
 } from "@/lib/content";
 
 function SectionHeader({ label, title }: { label: string; title: string }) {
@@ -31,7 +30,10 @@ export default function Home() {
       {/* Hero — full viewport, big type */}
       <header className="relative flex h-screen flex-col items-center justify-center overflow-hidden px-6 text-center">
         <div className="hero-glow" aria-hidden />
-        <p className="hero-rise mb-6 font-mono text-xs uppercase tracking-[0.3em] text-muted" style={{ animationDelay: "0ms" }}>
+        <p
+          className="hero-rise mb-6 font-mono text-xs uppercase tracking-[0.3em] text-muted"
+          style={{ animationDelay: "0ms" }}
+        >
           {profile.location}
         </p>
         <h1
@@ -56,7 +58,7 @@ export default function Home() {
 
       {/* Full-bleed parallax headshot */}
       <ParallaxImage
-        src={photos.headshot}
+        src={headshot}
         alt={profile.name}
         speed={0.18}
         priority
@@ -70,7 +72,7 @@ export default function Home() {
             I&apos;m {profile.firstName}.
           </h2>
         </Reveal>
-        <div className="space-y-6 text-lg leading-relaxed text-ink/85">
+        <div className="space-y-6 text-lg leading-relaxed text-fg/85">
           {about.map((para, i) => (
             <Reveal as="p" key={i} delay={i * 120}>
               {para}
@@ -94,40 +96,10 @@ export default function Home() {
           >
             LinkedIn
           </a>
-          <Link
-            href="/projects"
-            className="link-underline text-accent"
-          >
+          <Link href="/projects" className="link-underline text-accent">
             See what I&apos;ve built →
           </Link>
         </Reveal>
-      </section>
-
-      {/* Stats band — animated, résumé-true numbers */}
-      <section className="grain relative overflow-hidden bg-ink py-24 text-paper">
-        <div className="mx-auto max-w-5xl px-6">
-          <Reveal className="mb-14">
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-paper/50">
-              By the numbers
-            </p>
-          </Reveal>
-          <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-4">
-            {stats.map((stat, i) => (
-              <Reveal key={stat.label} delay={i * 100}>
-                <p className="text-4xl font-semibold tracking-tight sm:text-5xl">
-                  <Counter
-                    value={stat.value}
-                    suffix={stat.suffix}
-                    decimals={stat.decimals}
-                  />
-                </p>
-                <p className="mt-3 text-sm leading-snug text-paper/60">
-                  {stat.label}
-                </p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* Experience */}
@@ -141,7 +113,7 @@ export default function Home() {
                 <span className="font-mono text-xs text-muted">{item.dates}</span>
               </div>
               <p className="mt-0.5 text-sm text-muted">{item.role}</p>
-              <p className="mt-3 text-[15px] leading-relaxed text-ink/85">
+              <p className="mt-3 text-[15px] leading-relaxed text-fg/85">
                 {item.blurb}
               </p>
             </Reveal>
@@ -160,7 +132,7 @@ export default function Home() {
                 <span className="font-mono text-xs text-muted">{edu.dates}</span>
               </div>
               <p className="mt-0.5 text-sm text-muted">{edu.degree}</p>
-              <p className="mt-3 text-[15px] leading-relaxed text-ink/85">
+              <p className="mt-3 text-[15px] leading-relaxed text-fg/85">
                 {edu.detail}
               </p>
             </Reveal>
@@ -182,7 +154,7 @@ export default function Home() {
                   {group.items.map((item) => (
                     <span
                       key={item}
-                      className="rounded-full border border-line px-3 py-1 font-mono text-xs text-ink/80"
+                      className="rounded-full border border-line px-3 py-1 font-mono text-xs text-fg/80 transition-colors hover:border-accent hover:text-accent"
                     >
                       {item}
                     </span>
@@ -194,29 +166,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Dark photo strip — personal closer */}
-      <section className="bg-ink py-28 text-paper">
-        <div className="mx-auto max-w-5xl px-6">
-          <Reveal className="mb-12">
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-paper/50">
-              Off the clock
-            </p>
-          </Reveal>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {photos.strip.map((src, i) => (
-              <Reveal key={src} delay={i * 140}>
-                <div className="group relative aspect-[4/5] overflow-hidden bg-paper/10">
-                  <Image
-                    src={src}
-                    alt=""
-                    fill
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, 33vw"
-                  />
-                </div>
-              </Reveal>
-            ))}
-          </div>
+      {/* Photo gallery — personal closer. Auto-flows however many photos
+          are in `gallery` (see lib/content.ts to add more). */}
+      <section className="mx-auto max-w-5xl px-6 py-28">
+        <SectionHeader label="04" title="Off the clock" />
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+          {gallery.map((photo, i) => (
+            <Reveal key={photo.src} delay={(i % 3) * 120}>
+              <div className="group relative aspect-[4/5] overflow-hidden rounded-sm border border-line bg-surface">
+                <Image
+                  src={photo.src}
+                  alt={photo.caption ?? ""}
+                  fill
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                />
+                {photo.caption && (
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg/90 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <span className="font-mono text-xs text-fg">
+                      {photo.caption}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </Reveal>
+          ))}
         </div>
       </section>
 
