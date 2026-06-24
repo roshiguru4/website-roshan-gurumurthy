@@ -1,48 +1,70 @@
 import Link from "next/link";
-import { Nav, Footer } from "@/components/Nav";
-import { Typewriter } from "@/components/Typewriter";
-import { profile, typewriter } from "@/lib/content";
+import { Nav } from "@/components/Nav";
+import { profile, links } from "@/lib/content";
 
 export default function Home() {
   return (
-    <>
+    <main>
       <Nav />
-      <main className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center px-6">
-        <p
-          className="fade-in font-mono text-xs uppercase tracking-[0.1em] text-muted"
-          style={{ animationDelay: "80ms" }}
-        >
-          {profile.name}
-        </p>
 
-        <div className="fade-in mt-6" style={{ animationDelay: "200ms" }}>
-          <Typewriter
-            phrases={typewriter}
-            className="min-h-[2.4em] text-[2rem] font-medium leading-[1.2] text-primary sm:text-5xl"
-          />
-        </div>
+      <h1 className="mb-4">Roshan Gurumurthy</h1>
 
-        <div
-          className="fade-in mt-12 flex gap-x-8 font-mono text-xs"
-          style={{ animationDelay: "320ms" }}
-        >
-          <Link
-            href="/projects"
-            className="text-muted transition-colors hover:text-primary"
-          >
-            Projects →
-          </Link>
-          <a
-            href={profile.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted transition-colors hover:text-primary"
-          >
-            GitHub →
-          </a>
-        </div>
-      </main>
-      <Footer />
-    </>
+      <p>
+        I&apos;m a <Link href={links.developer}>developer</Link> and{" "}
+        <Link href={links.researcher}>researcher</Link>. I study CS and Math at{" "}
+        <a href={links.washu} target="_blank" rel="noopener noreferrer">
+          WashU
+        </a>{" "}
+        and I&apos;m currently interning at{" "}
+        <a href={links.schaeffler} target="_blank" rel="noopener noreferrer">
+          Schaeffler
+        </a>{" "}
+        building AI search infrastructure. I&apos;ve been coding for about four
+        years, mostly on retrieval systems and ML pipelines.
+      </p>
+
+      <p>
+        Outside of work I&apos;m VP of{" "}
+        <a href={links.bhangra} target="_blank" rel="noopener noreferrer">
+          WashU Bhangra
+        </a>
+        , follow NBA analytics pretty closely, and trade on prediction markets.
+        I&apos;m also building <Link href="/work/nephly">Nephly</Link> with my
+        brother — a navigation tool for people exploring kidney donation.
+      </p>
+
+      <p>Some things I&apos;ve built:</p>
+
+      <ul>
+        <li>
+          <Link href="/work/genie-search">Genie Search</Link>
+        </li>
+        <li>
+          <Link href="/work/embcache">embcache</Link>
+        </li>
+        <li>
+          <Link href="/work/nephly">Nephly</Link>
+        </li>
+        <li>
+          <Link href="/work/sp500-classifier">S&amp;P 500 risk classifier</Link>
+        </li>
+        <li>
+          <Link href="/work/dance-practice-tool">Dance practice tool</Link>
+        </li>
+      </ul>
+
+      <p>
+        You can browse my <Link href="/work">work</Link> or{" "}
+        <a href={profile.github} target="_blank" rel="noopener noreferrer">
+          code
+        </a>
+        , or{" "}
+        <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+          follow me online
+        </a>
+        . I&apos;m looking for full-time roles starting Summer 2027.{" "}
+        <a href={`mailto:${profile.email}`}>Reach out</a> if interested.
+      </p>
+    </main>
   );
 }
