@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Nav } from "@/components/Nav";
-import { profile, links } from "@/lib/content";
+import { profile, links, research } from "@/lib/content";
 
 export default function Home() {
   return (
@@ -24,7 +24,7 @@ export default function Home() {
       </p>
 
       <p>
-        Outside of work I&apos;m VP of WashU Bhangra, follow NBA analytics
+        Outside of work I&apos;m on WashU Bhangra, follow NBA analytics
         pretty closely, and trade on prediction markets.
         I&apos;m also building <Link href="/work/nephly">Nephly</Link> with my
         brother — a navigation tool for people exploring kidney donation.
@@ -49,6 +49,17 @@ export default function Home() {
           <Link href="/work/dance-practice-tool">Dance practice tool</Link>
         </li>
       </ul>
+
+      <p>Research posters from the Ho Lab:</p>
+
+      {research.map((r) => (
+        <p key={r.link}>
+          <a href={r.link} target="_blank" rel="noopener noreferrer">
+            {r.title}
+          </a>{" "}
+          ({r.term}). {r.description}
+        </p>
+      ))}
 
       <p>
         You can browse my <Link href="/work">work</Link> or{" "}

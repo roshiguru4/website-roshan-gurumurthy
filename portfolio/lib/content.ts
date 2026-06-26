@@ -41,7 +41,8 @@ export const projects: Project[] = [
     slug: "embcache",
     name: "embcache",
     description: [
-      "A drop-in caching layer for text embeddings. Wrap any embedding function and identical inputs return instantly without hitting the API again. It uses model-aware keys so different models never collide, and it tracks exactly how many calls and tokens it's saved. Shipping as an open-source Python package.",
+      "A drop-in caching layer for text embeddings, now published on PyPI (pip install embcache). Wrap any embedding function and identical inputs come back instantly instead of hitting the API again. Model-aware keys keep different models from colliding, vectors are packed as float32 to keep storage tight, and it tracks every call, token, and dollar it saves across runs.",
+      "On a ~1,500-chunk benchmark with lots of repeats, it cut API calls from 1,500 to 260, tokens from ~375K to ~65K, and per-run cost from $0.0075 to $0.0013 — about 148 seconds saved each run. Backed by SQLite out of the box or Redis, with 74 tests behind it.",
     ],
     tech: "Python · SQLite · Redis",
     link: "https://github.com/roshiguru4/embcache",
@@ -74,5 +75,34 @@ export const projects: Project[] = [
     tech: "Flask · SQLAlchemy · Bootstrap · JWT",
     link: "https://github.com/roshiguru4",
     linkLabel: "Source",
+  },
+];
+
+export type Research = {
+  title: string;
+  /** Lab + term, e.g. "Ho Lab · Fall 2025". */
+  term: string;
+  description: string;
+  /** Link to the poster. */
+  link: string;
+  linkLabel: string;
+};
+
+export const research: Research[] = [
+  {
+    title: "Does Role Framing Shape Cognitive Engagement in AI-Assisted Decisions?",
+    term: "Ho Lab · Spring 2026",
+    description:
+      "With Tory Farmer. A between-subjects priming experiment on AI-assisted credit decisions: does framing someone as the decision-maker versus a reviewer of the AI change how critically they engage with it? We measure decision time, how often people inspect the AI's reasoning, and how often they just accept its answer.",
+    link: "https://canva.link/x235l9bkags1iqx",
+    linkLabel: "Poster",
+  },
+  {
+    title: "Judging LLM Debates: How Judge Experience and Evidence Styles Affect Accuracy",
+    term: "Ho Lab · Fall 2025",
+    description:
+      "With Andrew Tian. We test whether giving human judges verifiable evidence — runnable code they can actually execute and check — helps them more accurately referee debates between LLMs, and whether novice judges gain more from that evidence than experts do.",
+    link: "https://canva.link/jp919xbjzsn1vf7",
+    linkLabel: "Poster",
   },
 ];
