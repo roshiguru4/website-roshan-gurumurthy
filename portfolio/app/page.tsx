@@ -24,8 +24,8 @@ export default function Home() {
       </p>
 
       <p>
-        Outside of work I&apos;m on WashU Bhangra, follow NBA analytics
-        pretty closely, and trade on prediction markets.
+        Outside of work I&apos;m on WashU Bhangra, run pickup at the rec
+        center, and play poker.
         I&apos;m also building <Link href="/work/nephly">Nephly</Link> with my
         brother — a navigation tool for people exploring kidney donation.
       </p>
