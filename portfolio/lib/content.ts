@@ -11,9 +11,10 @@ export const profile = {
 // A few are best guesses — swap in the real URLs when you have them.
 export const links = {
   developer: "/work",
-  researcher: "/work",
+  researcher: "/research",
   washu: "https://wustl.edu",
   schaeffler: "https://www.schaeffler.com",
+  holab: "https://chienjuho.com",
 };
 
 export type Project = {

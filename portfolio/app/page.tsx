@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Nav } from "@/components/Nav";
-import { profile, links, research } from "@/lib/content";
+import { profile, links } from "@/lib/content";
 
 export default function Home() {
   return (
@@ -48,17 +48,6 @@ export default function Home() {
         </li>
       </ul>
 
-      <p>Research posters from the Ho Lab:</p>
-
-      {research.map((r) => (
-        <p key={r.link}>
-          <a href={r.link} target="_blank" rel="noopener noreferrer">
-            {r.title}
-          </a>{" "}
-          ({r.term}). {r.description}
-        </p>
-      ))}
-
       <p>
         You can browse my <Link href="/work">work</Link> or{" "}
         <a href={profile.github} target="_blank" rel="noopener noreferrer">
@@ -68,7 +57,7 @@ export default function Home() {
         <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
           follow me online
         </a>
-        . I&apos;m looking for full-time roles starting Summer 2027.{" "}
+        .{" "}
         <a href={`mailto:${profile.email}`}>Reach out</a> if interested.
       </p>
     </main>

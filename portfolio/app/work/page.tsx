@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "@/components/Nav";
-import { projects, research } from "@/lib/content";
+import { projects } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Work — Roshan Gurumurthy",
@@ -26,19 +26,12 @@ export default function Work() {
         </section>
       ))}
 
-      <h1 className="mb-10">Research</h1>
+      <h1 className="mb-4">Research</h1>
 
-      {research.map((r) => (
-        <section key={r.link} className="mb-10">
-          <h2>
-            <a href={r.link} target="_blank" rel="noopener noreferrer">
-              {r.title}
-            </a>
-          </h2>
-          <p>{r.description}</p>
-          <p>{r.term}</p>
-        </section>
-      ))}
+      <p>
+        I also do human-AI interaction research in the Ho Lab.{" "}
+        <Link href="/research">See my research →</Link>
+      </p>
     </main>
   );
 }
