@@ -10,24 +10,22 @@ export default function Home() {
       <h1 className="mb-4">Roshan Gurumurthy</h1>
 
       <p>
-        I&apos;m a <Link href={links.developer}>developer</Link> and{" "}
-        <Link href={links.researcher}>researcher</Link>. I study CS and Math at{" "}
+        I&apos;m Roshan, a <Link href={links.developer}>developer</Link> and{" "}
+        <Link href={links.researcher}>researcher</Link>. I&apos;m studying CS and
+        Math at{" "}
         <a href={links.washu} target="_blank" rel="noopener noreferrer">
           WashU
         </a>{" "}
-        and I&apos;m currently interning at{" "}
+        and currently interning at{" "}
         <a href={links.schaeffler} target="_blank" rel="noopener noreferrer">
           Schaeffler
         </a>{" "}
-        building AI search infrastructure. I&apos;ve been coding for about four
-        years, mostly on retrieval systems and ML pipelines.
+        building AI search infrastructure.
       </p>
 
       <p>
         Outside of work I&apos;m on WashU Bhangra, run pickup at the rec
         center, and play poker.
-        I&apos;m also building <Link href="/work/nephly">Nephly</Link> with my
-        brother — a navigation tool for people exploring kidney donation.
       </p>
 
       <p>Some things I&apos;ve built:</p>
